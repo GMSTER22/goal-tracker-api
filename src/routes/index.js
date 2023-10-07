@@ -3,7 +3,7 @@ const swaggerDocRouter = require('./swagger.route');
 // const mongodb = require('../database/database');
 
 // router.get('/books', async (req, res) => {
-//   const books = await mongoDB.getDb().collection('books').find({}).toArray();
+//   const books = await mongodb.getDb().collection('books').find({}).toArray();
 
 //   res.status(200).json(books);
 // });
