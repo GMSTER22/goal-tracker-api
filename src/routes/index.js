@@ -8,6 +8,11 @@ const swaggerDocRouter = require('./swagger.route');
 //   res.status(200).json(books);
 // });
 
+router.use('/users', require('./users'));
+router.use('/goals', require('./goals'));
+router.use('/comments', require('./comments'));
+router.use('/categories', require('./categories'));
+
 router.use('/', swaggerDocRouter);
 
 router.get('/', (req, res) => {
