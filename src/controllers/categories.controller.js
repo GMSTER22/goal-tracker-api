@@ -78,10 +78,11 @@ const updateCategory = async (req, res, next) => {
 
 const deleteCategory = async(req, res, next) => {
     try {
+        //#swagger.tags=['Categories']
         const categoryId = new ObjectId(req.params.id);
         const response = await mongodb.getDb().collection('categories').deleteOne({_id: categoryId});
-        if (response.modificationCount > 0) {
-            // If category is updated send s status 200
+        if (response.deleteCount > 0) {
+            // If category is deleted send s status 200
             res.status(204).send();
         } else {
             // If there was some error that prevented the update send a status 500 error

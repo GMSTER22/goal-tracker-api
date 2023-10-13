@@ -57,8 +57,50 @@ const createComment = async (req, res, next) => {
     }
 };
 
+const updateComment = async (req, res, next) => {
+    try {
+        //#swagger.tags=['Comments']
+        const commentId = new ObjectId(req.params.id);
+        const comment = {
+            userId: req.body.userId,
+            goalId: req.body.goalId,
+            text: req.body.text,
+            createdAt: req.body.createdAt
+        };
+        const response = await mongodb.getDb().collection('comments').replaceOne({_id: commentId}, comment);
+        if (response.modificationCount > 0) {
+            // If category is updated send s status 200
+            res.status(204).send();
+        } else {
+            // If there was some error that prevented the update send a status 500 error
+            res.status(500).json(response.error || 'Some error occurred while updating the comment');
+        }
+    } catch (error) {
+        next(error);
+    }  
+};
+
+const deleteComment = async(req, res, next) => {
+    try {
+        //#swagger.tags=['Comments']
+        const categoryId = new ObjectId(req.params.id);
+        const response = await mongodb.getDb().collection('comments').deleteOne({_id: commentId});
+        if (response.deleteCount > 0) {
+            // If comment is deleted send s status 200
+            res.status(204).send();
+        } else {
+            // If there was some error that prevented the update send a status 500 error
+            res.status(500).json(response.error || 'Some error occurred while deleting the comment');
+        }
+    } catch (error) {
+        next(error);
+    }
+};
+
 module.exports = {
     getAllComments,
     getOneComment,
-    createComment
+    createComment,
+    updateComment,
+    deleteComment
 }
