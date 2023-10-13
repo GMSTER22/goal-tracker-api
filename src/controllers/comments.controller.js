@@ -83,7 +83,7 @@ const updateComment = async (req, res, next) => {
 const deleteComment = async(req, res, next) => {
     try {
         //#swagger.tags=['Comments']
-        const categoryId = new ObjectId(req.params.id);
+        const commentId = new ObjectId(req.params.id);
         const response = await mongodb.getDb().collection('comments').deleteOne({_id: commentId});
         if (response.deleteCount > 0) {
             // If comment is deleted send s status 200
