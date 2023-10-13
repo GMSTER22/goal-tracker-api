@@ -7,6 +7,7 @@ const ObjectId = require('mongodb').ObjectId;
 const getAllCategories = async (req, res) => {
     try {
         //#swagger.tags=['Categories']
+        //#swagger.description = 'Endpoint for getting all categories'
         const result = await mongodb.getDb().collection('categories').find();
         const categories = await result.toArray();
         res.setHeader('Content-Type', 'application/json');
@@ -20,6 +21,7 @@ const getAllCategories = async (req, res) => {
 const getOneCategory = async (req, res) => {
     try {
         //#swagger.tags=['Categories']
+        //#swagger.description = 'Endpoint to get a single category'
         const categoryId = new ObjectId(req.params.id);
         const result = await mongodb.getDb().collection('categories').find({ _id: categoryId });
         const categories = await result.toArray();
@@ -40,6 +42,19 @@ const getOneCategory = async (req, res) => {
 
 const createCategory = async (req, res, next) => {
     try {
+        //#swagger.tags=['Categories']
+        //#swagger.description = 'Endpoint for creating a new category'
+        /*
+        #swagger.parameters['obj'] = {
+            in: 'body',
+            description: 'Add a category',
+            require: true,
+            schema: {
+                $userId: '65275353941bfccbf0de1135',
+                $categoryName: 'School'
+            }
+        }
+        */
         const category = {
             userId: req.body.userId,
             categoryName: req.body.categoryName

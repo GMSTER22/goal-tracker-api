@@ -7,6 +7,7 @@ const ObjectId = require('mongodb').ObjectId;
 const getAllComments = async (req, res) => {
     try {
         //#swagger.tags=['Comments']
+        //#swagger.description = 'Endpoint to get all comments'
         const result = await mongodb.getDb().collection('comments').find();
         const comments = await result.toArray();
         res.setHeader('Content-Type', 'application/json');
@@ -20,6 +21,7 @@ const getAllComments = async (req, res) => {
 const getOneComment = async (req, res) => {
     try {
         //#swagger.tags=['Comments']
+        //#swagger.description = 'Endpoint to get a single comment'
         const commentId = new ObjectId(req.params.id);
         const result = await mongodb.getDb().collection('comments').find({ _id: commentId });
         const comments = await result.toArray();
@@ -40,6 +42,21 @@ const getOneComment = async (req, res) => {
 
 const createComment = async (req, res, next) => {
     try {
+        //#swagger.tags=['Comments']
+        //#swagger.description = 'Endpoint for creating a new comment'
+        /*
+        #swagger.parameters['obj'] = {
+            in: 'body',
+            description: 'Add a Comment',
+            require: true,
+            schema: {
+                $userId: '65275353941bfccbf0de1135',
+                $goalId: '652757fd941bfccbf0de1144',
+                $text: 'I am doing pretty good on my goal',
+                $createdAt: '10/13/2023'
+            }
+        }
+        */
         const comment = {
             userId: req.body.userId,
             goalId: req.body.goalId,
