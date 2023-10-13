@@ -7,6 +7,7 @@ const ObjectId = require('mongodb').ObjectId;
 const getAllGoals = async (req, res) => {
     try {
         //#swagger.tags=['Goals']
+        //#swagger.description = 'Endpoint to get all users'
         const result = await mongodb.getDb().collection('goals').find();
         const goals = await result.toArray();
         res.setHeader('Content-Type', 'application/json');
@@ -20,6 +21,7 @@ const getAllGoals = async (req, res) => {
 const getOneGoal = async (req, res) => {
     try {
         //#swagger.tags=['Goals']
+        //#swagger.description = 'Endpoint to get a single goal'
         const goalId = new ObjectId(req.params.id);
         const result = await mongodb.getDb().collection('goals').find({ _id: goalId });
         const goals = await result.toArray();
@@ -40,8 +42,27 @@ const getOneGoal = async (req, res) => {
 
 const createGoal = async (req, res, next) => {
     try {
+        //#swagger.tags=['Goals']
+        //#swagger.description = 'Endpoint for creating a new goal'
+        /*
+        #swagger.parameters['obj'] = {
+            in: 'body',
+            description: 'Add a Goal',
+            require: true,
+            schema: {
+                $userId: '65275353941bfccbf0de1135',
+                $categoryId: '6527678ff7fe385cf16b10a4'
+                $title: "Eat more Carrots",
+                $description: 'I need to eat more carrots.',
+                $startDate: '10/13/2023',
+                $dueDate: '12/13/2023',
+                $progress: 10
+            }
+        }
+        */
         const goal = {
             userId: req.body.userId,
+            categoryId: req.body.categoryId,
             title: req.body.title,
             description: req.body.description,
             startDate: req.body.startDate,

@@ -7,6 +7,7 @@ const ObjectId = require('mongodb').ObjectId;
 const getAllUsers = async (req, res) => {
     try {
         //#swagger.tags=['Users']
+        //#swagger.description = 'Endpoint to get all users'
         const result = await mongodb.getDb().collection('users').find();
         const users = await result.toArray();
         res.setHeader('Content-Type', 'application/json');
@@ -20,6 +21,7 @@ const getAllUsers = async (req, res) => {
 const getOneUser = async (req, res) => {
     try {
         //#swagger.tags=['Users']
+        //#swagger.description = 'Endpoint to get a single user'
         const userId = new ObjectId(req.params.id);
         const result = await mongodb.getDb().collection('users').find({ _id: userId });
         const users = await result.toArray();
@@ -40,6 +42,7 @@ const getOneUser = async (req, res) => {
 
 const getUserByEmail = async (req, res) => {
     //#swagger.tags=['Users']
+    //#swagger.description = 'Endpoint to get a super by their email'
     try {
         const email = req.params.email;
         const result = await mongodb.getDb().collection('users').findOne({ email });
@@ -60,6 +63,20 @@ const getUserByEmail = async (req, res) => {
 
 const createUser = async (req, res, next) => {
     try {
+        //#swagger.tags=['Users']
+        //#swagger.description = 'Endpoint for creating a new user'
+        /*
+        #swagger.parameters['obj'] = {
+            in: 'body',
+            description: 'Add a User',
+            require: true,
+            schema: {
+                $firstName: 'Joe',
+                $lastName: 'Bobson',
+                $email: 'joe.bobson@gmail.com'
+            }
+        }
+        */
         const user = {
             firstName: req.body.firstName,
             lastName: req.body.lastName,
