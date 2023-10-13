@@ -80,8 +80,52 @@ const createGoal = async (req, res, next) => {
     }
 };
 
+const updateGoal = async (req, res, next) => {
+    try {
+        //#swagger.tags=['Goals']
+        const goalId = new ObjectId(req.params.id);
+        const goal = {
+            userId: req.body.userId,
+            title: req.body.title,
+            description: req.body.description,
+            startDate: req.body.startDate,
+            dueDate: req.body.dueDate,
+            progress: req.body.progress
+        };
+        const response = await mongodb.getDb().collection('goals').replaceOne({_id: goalId}, goal);
+        if (response.modificationCount > 0) {
+            // If category is updated send s status 200
+            res.status(204).send();
+        } else {
+            // If there was some error that prevented the update send a status 500 error
+            res.status(500).json(response.error || 'Some error occurred while updating the goal');
+        }
+    } catch (error) {
+        next(error);
+    }  
+};
+
+const deleteGoal = async(req, res, next) => {
+    try {
+        //#swagger.tags=['Goals']
+        const goalId = new ObjectId(req.params.id);
+        const response = await mongodb.getDb().collection('goals').deleteOne({_id: goalId});
+        if (response.deleteCount > 0) {
+            // If comment is deleted send s status 200
+            res.status(204).send();
+        } else {
+            // If there was some error that prevented the update send a status 500 error
+            res.status(500).json(response.error || 'Some error occurred while deleting the goal');
+        }
+    } catch (error) {
+        next(error);
+    }
+};
+
 module.exports = {
     getAllGoals,
     getOneGoal,
-    createGoal
+    createGoal,
+    updateGoal,
+    deleteGoal,
 }

@@ -93,9 +93,50 @@ const createUser = async (req, res, next) => {
     }
 };
 
+const updateUser = async (req, res, next) => {
+    try {
+        //#swagger.tags=['Users']
+        const userId = new ObjectId(req.params.id);
+        const user = {
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            email: req.body.email
+        };
+        const response = await mongodb.getDb().collection('users').replaceOne({_id: userId}, user);
+        if (response.modificationCount > 0) {
+            // If category is updated send s status 200
+            res.status(204).send();
+        } else {
+            // If there was some error that prevented the update send a status 500 error
+            res.status(500).json(response.error || 'Some error occurred while updating the user');
+        }
+    } catch (error) {
+        next(error);
+    }  
+};
+
+const deleteUser = async(req, res, next) => {
+    try {
+        //#swagger.tags=['Users']
+        const userId = new ObjectId(req.params.id);
+        const response = await mongodb.getDb().collection('users').deleteOne({_id: userId});
+        if (response.deleteCount > 0) {
+            // If comment is deleted send s status 200
+            res.status(204).send();
+        } else {
+            // If there was some error that prevented the update send a status 500 error
+            res.status(500).json(response.error || 'Some error occurred while deleting the user');
+        }
+    } catch (error) {
+        next(error);
+    }
+};
+
 module.exports = {
     getAllUsers,
     getOneUser,
     getUserByEmail,
-    createUser
+    createUser,
+    updateUser,
+    deleteUser
 }
