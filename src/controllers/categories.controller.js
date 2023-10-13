@@ -76,17 +76,26 @@ const updateCategory = async (req, res, next) => {
     }  
 };
 
-const deleteCategory = async(req, res) => {
+const deleteCategory = async(req, res, next) => {
     try {
         const categoryId = new ObjectId(req.params.id);
         const response = await mongodb.getDb().collection('categories').deleteOne({_id: categoryId});
-
+        if (response.modificationCount > 0) {
+            // If category is updated send s status 200
+            res.status(204).send();
+        } else {
+            // If there was some error that prevented the update send a status 500 error
+            res.status(500).json(response.error || 'Some error occurred while deleting the category');
+        }
+    } catch (error) {
+        next(error);
     }
-}
+};
 
 module.exports = {
     getAllCategories,
     getOneCategory,
     createCategory,
-    updateCategory
+    updateCategory,
+    deleteCategory
 }
