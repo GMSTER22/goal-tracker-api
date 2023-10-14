@@ -1,39 +1,25 @@
 const mongodb = require('../database/database');
-
 const ObjectId = require('mongodb').ObjectId;
 
-const getAllCategories = async (req, res) => {
+const getAllCategories = async (req, res, next) => {
+  //#swagger.tags=['Categories']
+  //#swagger.description = 'Endpoint to get all categories'
   try {
-    //#swagger.tags=['Categories']
     const result = await mongodb.getDb().collection('categories').find();
     const categories = await result.toArray();
     res.setHeader('Content-Type', 'application/json');
     res.status(200).json(categories);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    // console.error(error);
+    // res.status(500).json({ error: 'Internal Server Error' });
+    next(error);
   }
 };
 
-const getOneCategory = async (req, res) => {
+const getOneCategory = async (req, res, next) => {
+  //#swagger.tags=['Categories']
+  //#swagger.description = 'Endpoint to get a single category'
   try {
-    //#swagger.tags=['Categories']
-    const categoryId = new ObjectId(req.params.id);
-    const result = await mongodb.getDb().collection('categories').find({ _id: categoryId });
-    const categories = await result.toArray();
-    const categories = await result.toArray();
-      res.setHeader('Content-Type', 'application/json');
-      res.status(200).json(categories);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-};
-
-const getOneCategory = async (req, res) => {
-  try {
-    //#swagger.tags=['Categories']
-    //#swagger.description = 'Endpoint to get a single category'
     const categoryId = new ObjectId(req.params.id);
     const result = await mongodb.getDb().collection('categories').find({ _id: categoryId });
     const categories = await result.toArray();
@@ -43,15 +29,30 @@ const getOneCategory = async (req, res) => {
       res.status(404).json({ error: 'categorie not found' });
       return;
     }
+
     res.setHeader('Content-Type', 'application/json');
     res.status(200).json(categories[0]);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    // console.error(error);
+    // res.status(500).json({ error: 'Internal Server Error' });
+    next(error);
   }
 };
 
 const createCategory = async (req, res, next) => {
+  //#swagger.tags=['Categories']
+  //#swagger.description = 'Endpoint for creating a new category'
+  /*
+  #swagger.parameters['obj'] = {
+    in: 'body',
+    description: 'Add a category',
+    require: true,
+    schema: {
+      $userId: '65275353941bfccbf0de1135',
+      $categoryName: 'School'
+    }
+  }
+  */
   try {
     const category = {
       userId: req.body.userId,
@@ -69,15 +70,30 @@ const createCategory = async (req, res, next) => {
 };
 
 const updateCategory = async (req, res, next) => {
+  //#swagger.tags=['Categories']
+  //#swagger.description = 'Endpoint for updating a category'
+  /*
+  #swagger.parameters['obj'] = {
+    in: 'body',
+    description: 'Update a category',
+    require: true,
+    schema: {
+      $userId: '65275353941bfccbf0de1135',
+      $categoryName: 'School'
+    }
+  }
+  */
   try {
-    //#swagger.tags=['Categories']
     const categoryId = new ObjectId(req.params.id);
     const category = {
       userId: req.body.userId,
       categoryName: req.body.categoryName
     };
-    const response = await mongodb.getDb().collection('categories').replaceOne({_id: categoryId}, category);
-    if (response.modificationCount > 0) {
+    const response = await mongodb
+      .getDb()
+      .collection('categories')
+      .replaceOne({ _id: categoryId }, category);
+    if (response.modifiedCount > 0) {
       // If category is updated send s status 200
       res.status(204).send();
     } else {
@@ -86,15 +102,16 @@ const updateCategory = async (req, res, next) => {
     }
   } catch (error) {
     next(error);
-  }  
+  }
 };
 
-const deleteCategory = async(req, res, next) => {
+const deleteCategory = async (req, res, next) => {
+  //#swagger.tags=['Categories']
+  //#swagger.description = 'Endpoint for deleting a category'
   try {
-    //#swagger.tags=['Categories']
     const categoryId = new ObjectId(req.params.id);
-    const response = await mongodb.getDb().collection('categories').deleteOne({_id: categoryId});
-    if (response.deleteCount > 0) {
+    const response = await mongodb.getDb().collection('categories').deleteOne({ _id: categoryId });
+    if (response.deletedCount > 0) {
       // If category is deleted send s status 200
       res.status(204).send();
     } else {

@@ -21,37 +21,51 @@
     },
     "/users/": {
       "get": {
-        "tags": ["Users"],
-        "description": "",
-        "produces": ["application/json"],
+        "tags": [
+          "Users"
+        ],
+        "description": "Endpoint to get all users",
+        "produces": [
+          "application/json"
+        ],
         "responses": {
           "200": {
             "description": "OK"
-          },
-          "500": {
-            "description": "Internal Server Error"
           }
         }
       },
       "post": {
-        "description": "",
+        "tags": [
+          "Users"
+        ],
+        "description": "Endpoint for creating a new user",
         "parameters": [
           {
-            "name": "body",
+            "name": "obj",
             "in": "body",
+            "description": "Add a User",
+            "require": true,
             "schema": {
               "type": "object",
               "properties": {
                 "firstName": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "Joe"
                 },
                 "lastName": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "Bobson"
                 },
                 "email": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "joe.bobson@gmail.com"
                 }
-              }
+              },
+              "required": [
+                "firstName",
+                "lastName",
+                "email"
+              ]
             }
           }
         ],
@@ -67,9 +81,13 @@
     },
     "/users/{id}": {
       "get": {
-        "tags": ["Users"],
-        "description": "",
-        "produces": ["application/json"],
+        "tags": [
+          "Users"
+        ],
+        "description": "Endpoint to get a single user by id",
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "id",
@@ -84,24 +102,75 @@
           },
           "404": {
             "description": "Not Found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Endpoint for updating a user",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Update a User",
+            "require": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "firstName": {
+                  "type": "string",
+                  "example": "Jane"
+                },
+                "lastName": {
+                  "type": "string",
+                  "example": "Doe"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "jane.doe@gmail.com"
+                }
+              },
+              "required": [
+                "firstName",
+                "lastName",
+                "email"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
           },
           "500": {
             "description": "Internal Server Error"
           }
         }
-      }
-    },
-    "/users/email": {
-      "get": {
-        "tags": ["Users"],
-        "description": "",
-        "produces": ["application/json"],
+      },
+      "delete": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Endpoint for deleting a user",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
+          "204": {
+            "description": "No Content"
           },
           "500": {
             "description": "Internal Server Error"
@@ -111,46 +180,71 @@
     },
     "/goals/": {
       "get": {
-        "tags": ["Goals"],
-        "description": "",
-        "produces": ["application/json"],
+        "tags": [
+          "Goals"
+        ],
+        "description": "Endpoint to get all goals",
+        "produces": [
+          "application/json"
+        ],
         "responses": {
           "200": {
             "description": "OK"
-          },
-          "500": {
-            "description": "Internal Server Error"
           }
         }
       },
       "post": {
-        "description": "",
+        "tags": [
+          "Goals"
+        ],
+        "description": "Endpoint to create a goal",
         "parameters": [
           {
-            "name": "body",
+            "name": "obj",
             "in": "body",
+            "description": "Add a Goal",
+            "require": true,
             "schema": {
               "type": "object",
               "properties": {
                 "userId": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "65275353941bfccbf0de1135"
+                },
+                "categoryId": {
+                  "type": "string",
+                  "example": "6527678ff7fe385cf16b10a4"
                 },
                 "title": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "Eat more Carrots"
                 },
                 "description": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "I need to eat more carrots."
                 },
                 "startDate": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "2023/10/13"
                 },
                 "dueDate": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "2023/12/13"
                 },
                 "progress": {
-                  "example": "any"
+                  "type": "number",
+                  "example": 10
                 }
-              }
+              },
+              "required": [
+                "userId",
+                "categoryId",
+                "title",
+                "description",
+                "startDate",
+                "dueDate",
+                "progress"
+              ]
             }
           }
         ],
@@ -166,9 +260,13 @@
     },
     "/goals/{id}": {
       "get": {
-        "tags": ["Goals"],
-        "description": "",
-        "produces": ["application/json"],
+        "tags": [
+          "Goals"
+        ],
+        "description": "Endpoint to get a single goal",
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "id",
@@ -183,6 +281,95 @@
           },
           "404": {
             "description": "Not Found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Goals"
+        ],
+        "description": "Endpoint to update a goal",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Update a goal",
+            "require": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userId": {
+                  "type": "string",
+                  "example": "65275353941bfccbf0de1135"
+                },
+                "categoryId": {
+                  "type": "string",
+                  "example": "6527678ff7fe385cf16b10a4"
+                },
+                "title": {
+                  "type": "string",
+                  "example": "Study the Scriptures"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "I need to study the scriptures more often."
+                },
+                "startDate": {
+                  "type": "string",
+                  "example": "2023/10/14"
+                },
+                "dueDate": {
+                  "type": "string",
+                  "example": "2023/12/13"
+                },
+                "progress": {
+                  "type": "number",
+                  "example": 10
+                }
+              },
+              "required": [
+                "userId",
+                "categoryId",
+                "title",
+                "description",
+                "startDate",
+                "dueDate",
+                "progress"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Goals"
+        ],
+        "description": "Endpoint to delete a goal",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
           },
           "500": {
             "description": "Internal Server Error"
@@ -192,40 +379,56 @@
     },
     "/comments/": {
       "get": {
-        "tags": ["Comments"],
-        "description": "",
-        "produces": ["application/json"],
+        "tags": [
+          "Comments"
+        ],
+        "description": "Endpoint to get all comments",
+        "produces": [
+          "application/json"
+        ],
         "responses": {
           "200": {
             "description": "OK"
-          },
-          "500": {
-            "description": "Internal Server Error"
           }
         }
       },
       "post": {
-        "description": "",
+        "tags": [
+          "Comments"
+        ],
+        "description": "Endpoint for creating a new comment",
         "parameters": [
           {
-            "name": "body",
+            "name": "obj",
             "in": "body",
+            "description": "Add a comment",
+            "require": true,
             "schema": {
               "type": "object",
               "properties": {
                 "userId": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "65275353941bfccbf0de1135"
                 },
                 "goalId": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "652757fd941bfccbf0de1144"
                 },
                 "text": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "I am doing pretty good on my goal"
                 },
                 "createdAt": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "10/13/2023"
                 }
-              }
+              },
+              "required": [
+                "userId",
+                "goalId",
+                "text",
+                "createdAt"
+              ]
             }
           }
         ],
@@ -241,9 +444,13 @@
     },
     "/comments/{id}": {
       "get": {
-        "tags": ["Comments"],
-        "description": "",
-        "produces": ["application/json"],
+        "tags": [
+          "Comments"
+        ],
+        "description": "Endpoint to get a single comment",
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "id",
@@ -258,6 +465,80 @@
           },
           "404": {
             "description": "Not Found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Comments"
+        ],
+        "description": "Endpoint for updating a comment",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Update a comment",
+            "require": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userId": {
+                  "type": "string",
+                  "example": "65275353941bfccbf0de1135"
+                },
+                "goalId": {
+                  "type": "string",
+                  "example": "652757fd941bfccbf0de1144"
+                },
+                "text": {
+                  "type": "string",
+                  "example": "I am struggling with my goal"
+                },
+                "createdAt": {
+                  "type": "string",
+                  "example": "10/13/2023"
+                }
+              },
+              "required": [
+                "userId",
+                "goalId",
+                "text",
+                "createdAt"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Comments"
+        ],
+        "description": "Endpoint for deleting a comment",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
           },
           "500": {
             "description": "Internal Server Error"
@@ -267,34 +548,46 @@
     },
     "/categories/": {
       "get": {
-        "tags": ["Categories"],
-        "description": "",
-        "produces": ["application/json"],
+        "tags": [
+          "Categories"
+        ],
+        "description": "Endpoint to get all categories",
+        "produces": [
+          "application/json"
+        ],
         "responses": {
           "200": {
             "description": "OK"
-          },
-          "500": {
-            "description": "Internal Server Error"
           }
         }
       },
       "post": {
-        "description": "",
+        "tags": [
+          "Categories"
+        ],
+        "description": "Endpoint for creating a new category",
         "parameters": [
           {
-            "name": "body",
+            "name": "obj",
             "in": "body",
+            "description": "Add a category",
+            "require": true,
             "schema": {
               "type": "object",
               "properties": {
                 "userId": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "65275353941bfccbf0de1135"
                 },
                 "categoryName": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "School"
                 }
-              }
+              },
+              "required": [
+                "userId",
+                "categoryName"
+              ]
             }
           }
         ],
@@ -310,9 +603,13 @@
     },
     "/categories/{id}": {
       "get": {
-        "tags": ["Categories"],
-        "description": "",
-        "produces": ["application/json"],
+        "tags": [
+          "Categories"
+        ],
+        "description": "Endpoint to get a single category",
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "id",
@@ -327,19 +624,73 @@
           },
           "404": {
             "description": "Not Found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Categories"
+        ],
+        "description": "Endpoint for updating a category",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Update a category",
+            "require": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userId": {
+                  "type": "string",
+                  "example": "65275353941bfccbf0de1135"
+                },
+                "categoryName": {
+                  "type": "string",
+                  "example": "School"
+                }
+              },
+              "required": [
+                "userId",
+                "categoryName"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
           },
           "500": {
             "description": "Internal Server Error"
           }
         }
-      }
-    },
-    "/api-docs": {
-      "get": {
-        "description": "",
+      },
+      "delete": {
+        "tags": [
+          "Categories"
+        ],
+        "description": "Endpoint for deleting a category",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "responses": {
-          "default": {
-            "description": ""
+          "204": {
+            "description": "No Content"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
