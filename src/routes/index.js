@@ -1,6 +1,5 @@
 const router = require('express').Router();
 const swaggerDocRouter = require('./swagger.route');
-const mongodb = require('../database/database');
 
 // router.get('/books', async (req, res) => {
 //   const books = await mongodb.getDb().collection('books').find({}).toArray();
