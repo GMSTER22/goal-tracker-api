@@ -128,6 +128,7 @@ const deleteGoal = async (req, res, next) => {
     const goalId = new ObjectId(req.params.id);
     const response = await mongodb.getDb().collection('goals').deleteOne({ _id: goalId });
     if (response.deletedCount > 0) {
+
       // If comment is deleted send s status 200
       res.status(204).send();
     } else {
