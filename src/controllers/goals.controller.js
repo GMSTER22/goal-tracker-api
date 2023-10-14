@@ -21,13 +21,27 @@ const getOneGoal = async (req, res) => {
     const goalId = new ObjectId(req.params.id);
     const result = await mongodb.getDb().collection('goals').find({ _id: goalId });
     const goals = await result.toArray();
+    res.setHeader('Content-Type', 'application/json');
+    res.status(200).json(goals);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+const getOneGoal = async (req, res) => {
+  try {
+    //#swagger.tags=['Goals']
+    //#swagger.description = 'Endpoint to get a single goal'
+    const goalId = new ObjectId(req.params.id);
+    const result = await mongodb.getDb().collection('goals').find({ _id: goalId });
+    const goals = await result.toArray();
 
     if (goals.length === 0) {
       // If goal with the specified ID is not found
       res.status(404).json({ error: 'goal not found' });
       return;
     }
-
     res.setHeader('Content-Type', 'application/json');
     res.status(200).json(goals[0]);
   } catch (error) {
@@ -57,8 +71,52 @@ const createGoal = async (req, res, next) => {
   }
 };
 
+const updateGoal = async (req, res, next) => {
+  try {
+    //#swagger.tags=['Goals']
+    const goalId = new ObjectId(req.params.id);
+    const goal = {
+      userId: req.body.userId,
+      title: req.body.title,
+      description: req.body.description,
+      startDate: req.body.startDate,
+      dueDate: req.body.dueDate,
+      progress: req.body.progress
+    };
+    const response = await mongodb.getDb().collection('goals').replaceOne({_id: goalId}, goal);
+    if (response.modificationCount > 0) {
+      // If category is updated send s status 200
+      res.status(204).send();
+    } else {
+      // If there was some error that prevented the update send a status 500 error
+      res.status(500).json(response.error || 'Some error occurred while updating the goal');
+    }
+  } catch (error) {
+    next(error);
+  }  
+};
+
+const deleteGoal = async(req, res, next) => {
+  try {
+    //#swagger.tags=['Goals']
+    const goalId = new ObjectId(req.params.id);
+    const response = await mongodb.getDb().collection('goals').deleteOne({_id: goalId});
+    if (response.deleteCount > 0) {
+      // If comment is deleted send s status 200
+      res.status(204).send();
+    } else {
+      // If there was some error that prevented the update send a status 500 error
+      res.status(500).json(response.error || 'Some error occurred while deleting the goal');
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   getAllGoals,
   getOneGoal,
-  createGoal
-};
+  createGoal,
+  updateGoal,
+  deleteGoal,
+}
