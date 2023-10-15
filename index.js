@@ -3,13 +3,31 @@ const bodyParser = require('body-parser');
 const config = require('./src/config/index');
 const mongoDb = require('./src/database/database');
 const router = require('./src/routes/index');
-// const session = require('express-session');
-// const passport = require('passport');
-// const GitHubStrategy = require('passport-github2').Strategy;
+const passport = require('passport');
+const session = require('express-session');
+const MongoStore = require('connect-mongodb-session')(session);
+const dotenv = require('dotenv');
+
+dotenv.config({ path: './.env' });
+require('./src/config/passport')(passport);
 
 const PORT = config.port || 8080;
 
 const app = express();
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(bodyParser.json());
+
+app.use((err, req, res, next) => {
+  res.status(500).send('Internal Server Error!');
+});
+
+// process.on('uncaughtException', (err, origin) => {
+//   console.log(process.stderr.fd, `Caught exception: ${err}\n` + `Exception origin: ${origin}`);
+// });
 
 app.use((req, res, next) => {
   res.header({
@@ -25,6 +43,31 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(
+  session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: false,
+    store: new MongoStore({ uri: process.env.MONGO_URI, collection: 'sessions' })
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use('/', router);
+app.use('/auth', require('./src/routes/auth'));
+
+// eslint-disable-next-line no-unused-vars
+
+// eslint-disable-next-line no-unused-vars
+mongoDb.initDb((err, _) => {
+  if (err) {
+    console.log(err);
+  } else {
+    app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
+  }
+});
 // passport.use(
 //   new GitHubStrategy(
 //     {
@@ -57,27 +100,3 @@ app.use((req, res, next) => {
 // app.use(passport.initialize());
 
 // app.use(passport.session());
-
-app.use(bodyParser.urlencoded({ extended: false }));
-
-app.use(bodyParser.json());
-
-app.use('/', router);
-
-// eslint-disable-next-line no-unused-vars
-app.use((err, req, res, next) => {
-  res.status(500).send('Internal Server Error!');
-});
-
-process.on('uncaughtException', (err, origin) => {
-  console.log(process.stderr.fd, `Caught exception: ${err}\n` + `Exception origin: ${origin}`);
-});
-
-// eslint-disable-next-line no-unused-vars
-mongoDb.initDb((err, _) => {
-  if (err) {
-    console.log(err);
-  } else {
-    app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
-  }
-});
