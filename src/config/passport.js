@@ -1,12 +1,13 @@
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const mongodb = require('../database/database');
+const config = require('./config/index.js');
 module.exports = function (passport) {
   passport.use(
     new GoogleStrategy(
       {
-        clientID: process.env.GOOGLE_CLIENT_ID,
-        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: '/auth/google/callback'
+        clientID: config.googleClientId,
+        clientSecret: config.googleClientSecret,
+        callbackURL: 'https://goal-tracker-javr.onrender.com/auth/google/callback'
       },
       async (accessToken, refreshToken, profile, done) => {
         const newUser = {

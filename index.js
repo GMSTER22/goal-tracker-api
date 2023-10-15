@@ -6,28 +6,16 @@ const router = require('./src/routes/index');
 const passport = require('passport');
 const session = require('express-session');
 const MongoStore = require('connect-mongodb-session')(session);
-const dotenv = require('dotenv');
 
-dotenv.config({ path: './.env' });
 require('./src/config/passport')(passport);
 
 const PORT = config.port || 8080;
 
 const app = express();
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(bodyParser.json());
-
-app.use((err, req, res, next) => {
-  res.status(500).send('Internal Server Error!');
-});
-
-process.on('uncaughtException', (err, origin) => {
-  console.log(process.stderr.fd, `Caught exception: ${err}\n` + `Exception origin: ${origin}`);
-});
 
 app.use((req, res, next) => {
   res.header({
@@ -48,7 +36,7 @@ app.use(
     secret: 'keyboard cat',
     resave: false,
     saveUninitialized: false,
-    store: new MongoStore({ uri: process.env.MONGO_URI, collection: 'sessions' })
+    store: new MongoStore({ uri: config.databaseURL, collection: 'sessions' })
   })
 );
 
@@ -57,7 +45,13 @@ app.use(passport.session());
 
 app.use('/', router);
 app.use('/auth', require('./src/routes/auth'));
+app.use((err, req, res, next) => {
+  res.status(500).send('Internal Server Error!');
+});
 
+process.on('uncaughtException', (err, origin) => {
+  console.log(process.stderr.fd, `Caught exception: ${err}\n` + `Exception origin: ${origin}`);
+});
 // eslint-disable-next-line no-unused-vars
 
 // eslint-disable-next-line no-unused-vars

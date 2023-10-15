@@ -6,5 +6,7 @@ dotenv.config();
 
 module.exports = {
   port: process.env.PORT,
-  databaseURL: process.env.MONGO_URI
+  databaseURL: process.env.MONGO_URI,
+  googleClientId: process.env.GOOGLE_CLIENT_ID,
+  googleClientSecret: process.env.GOOGLE_CLIENT_SECRET
 };
