@@ -10,8 +10,7 @@ const getAllUsers = async (req, res, next) => {
     res.setHeader('Content-Type', 'application/json');
     res.status(200).json(users);
   } catch (error) {
-    // console.error(error);
-    // res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: 'Some error ocurred while retrieving all Users' });
     next(error);
   }
 };
@@ -33,8 +32,7 @@ const getOneUser = async (req, res, next) => {
     res.setHeader('Content-Type', 'application/json');
     res.status(200).json(users[0]);
   } catch (error) {
-    // console.error(error);
-    // res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: 'Some error ocurred while retrieving this User' });
     next(error);
   }
 };
@@ -45,7 +43,7 @@ const getUserByEmail = async (req, res, next) => {
   try {
     const email = req.params.email;
     const result = await mongodb.getDb().collection('users').findOne({ email });
-    
+
     if (!result) {
       // If user with the specified email is not found
       res.status(404).json({ error: 'User not found' });
@@ -55,8 +53,7 @@ const getUserByEmail = async (req, res, next) => {
     res.setHeader('Content-type', 'application/json');
     res.status(200).json(result);
   } catch (error) {
-    // console.error(error);
-    // res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: 'Some error ocurred while retrieving this User by email' });
     next(error);
   }
 };
@@ -77,6 +74,10 @@ const createUser = async (req, res, next) => {
     }
   */
   try {
+    if (!req.body) {
+      res.status(400).send({ message: 'Content can not be empty!' });
+      return;
+    }
     const user = {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
@@ -89,6 +90,7 @@ const createUser = async (req, res, next) => {
       res.status(500).json(response.error || 'Some error occurred while creating the new user');
     }
   } catch (error) {
+    res.status(500).json({ error: 'Some error ocurred while creating the new User' });
     next(error);
   }
 };
@@ -109,6 +111,10 @@ const updateUser = async (req, res, next) => {
     }
   */
   try {
+    if (!req.body) {
+      res.status(400).send({ message: 'Content can not be empty!' });
+      return;
+    }
     const userId = new ObjectId(req.params.id);
     const user = {
       firstName: req.body.firstName,
@@ -124,6 +130,7 @@ const updateUser = async (req, res, next) => {
       res.status(500).json(response.error || 'Some error occurred while updating the user');
     }
   } catch (error) {
+    res.status(500).json({ error: 'Some error ocurred while updating this User' });
     next(error);
   }
 };
@@ -142,6 +149,7 @@ const deleteUser = async (req, res, next) => {
       res.status(500).json(response.error || 'Some error occurred while deleting the user');
     }
   } catch (error) {
+    res.status(500).json({ error: 'Some error ocurred while deleting this User' });
     next(error);
   }
 };

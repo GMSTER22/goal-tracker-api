@@ -10,8 +10,7 @@ const getAllGoals = async (req, res, next) => {
     res.setHeader('Content-Type', 'application/json');
     res.status(200).json(goals);
   } catch (error) {
-    // console.error(error);
-    // res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: 'Some error ocurred while retrieving All the Goals' });
     next(error);
   }
 };
@@ -33,8 +32,7 @@ const getOneGoal = async (req, res, next) => {
     res.setHeader('Content-Type', 'application/json');
     res.status(200).json(goals[0]);
   } catch (error) {
-    // console.error(error);
-    // res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: 'Some error ocurred while retrieving this Goal' });
     next(error);
   }
 };
@@ -59,6 +57,10 @@ const createGoal = async (req, res, next) => {
     }
   */
   try {
+    if (!req.body) {
+      res.status(400).send({ message: 'Content can not be empty!' });
+      return;
+    }
     const goal = {
       userId: req.body.userId,
       categoryId: req.body.categoryId,
@@ -75,6 +77,7 @@ const createGoal = async (req, res, next) => {
       res.status(500).json(response.error || 'Some error occurred while creating the new goal');
     }
   } catch (error) {
+    res.status(500).json({ error: 'Some error ocurred while creating this new goal' });
     next(error);
   }
 };
@@ -99,6 +102,10 @@ const updateGoal = async (req, res, next) => {
     }
   */
   try {
+    if (!req.body) {
+      res.status(400).send({ message: 'Content can not be empty!' });
+      return;
+    }
     const goalId = new ObjectId(req.params.id);
     const goal = {
       userId: req.body.userId,
@@ -117,6 +124,7 @@ const updateGoal = async (req, res, next) => {
       res.status(500).json(response.error || 'Some error occurred while updating the goal');
     }
   } catch (error) {
+    res.status(500).json({ error: 'Some error ocurred while updating this goal' });
     next(error);
   }
 };
@@ -128,7 +136,6 @@ const deleteGoal = async (req, res, next) => {
     const goalId = new ObjectId(req.params.id);
     const response = await mongodb.getDb().collection('goals').deleteOne({ _id: goalId });
     if (response.deletedCount > 0) {
-
       // If comment is deleted send s status 200
       res.status(204).send();
     } else {
@@ -136,6 +143,7 @@ const deleteGoal = async (req, res, next) => {
       res.status(500).json(response.error || 'Some error occurred while deleting the goal');
     }
   } catch (error) {
+    res.status(500).json({ error: 'Some error ocurred while deleting this new goal' });
     next(error);
   }
 };

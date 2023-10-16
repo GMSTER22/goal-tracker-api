@@ -7,7 +7,7 @@ module.exports = function (passport) {
       {
         clientID: config.googleClientId,
         clientSecret: config.googleClientSecret,
-        callbackURL: 'https://goal-tracker-javr.onrender.com/auth/google/callback'
+        callbackURL: '/auth/google/callback'
       },
       async (accessToken, refreshToken, profile, done) => {
         const newUser = {
