@@ -23,7 +23,7 @@ module.exports = function (passport) {
             done(null, user);
           } else {
             user = await mongodb.getDb().collection('users').insertOne(newUser);
-            done(null, user);
+            done(null, newUser);
           }
         } catch (error) {
           console.error(error);
