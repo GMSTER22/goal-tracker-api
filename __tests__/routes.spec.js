@@ -4,8 +4,6 @@ const uri = config.databaseURL;
 const supertest = require('supertest');
 const app = require('../index');
 const request = supertest(app);
-const chai = require('chai');
-const expect = chai.expect;
 
 describe('Categories tests', () => {
   let connection;
@@ -32,53 +30,62 @@ describe('Categories tests', () => {
   //
 
   it('respond to get all /categories', async () => {
-    const response = await request.get('/categories').expect(200);
+    const response = await request.get('/categories');
+    expect(response.statusCode).toBe(200);
   });
 
   it('respond to get a specific /categories/id', async () => {
-    const response = await request.get('/categories/65329c98efb09d062e7a8ab3').expect(200);
-    expect(response.body).to.have.property('userId');
-    expect(response.body).to.have.property('categoryName');
+    const response = await request.get('/categories/65329c98efb09d062e7a8ab3');
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toHaveProperty('userId');
+    expect(response.body).toHaveProperty('categoryName');
   });
 
   it('respond to get all /users', async () => {
-    const response = await request.get('/users').expect(200);
+    const response = await request.get('/users');
+    expect(response.statusCode).toBe(200);
   });
 
   it('respond to get a specific /users/id', async () => {
-    const response = await request.get('/users/6532a1b66073cec6c214f06f').expect(200);
-    expect(response.body).to.have.property('googleId');
-    expect(response.body).to.have.property('displayName');
-    expect(response.body).to.have.property('firstName');
-    expect(response.body).to.have.property('lastName');
-    expect(response.body).to.have.property('image');
+    const response = await request.get('/users/6532a1b66073cec6c214f06f');
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toHaveProperty('googleId');
+    expect(response.body).toHaveProperty('displayName');
+    expect(response.body).toHaveProperty('firstName');
+    expect(response.body).toHaveProperty('lastName');
+    expect(response.body).toHaveProperty('image');
   });
 
   it('respond to get all /comments', async () => {
-    const response = await request.get('/comments').expect(200);
+    const response = await request.get('/comments');
+    expect(response.statusCode).toBe(200);
   });
 
   it('respond to get a specific /comments/id', async () => {
-    const response = await request.get('/comments/6527685ff7fe385cf16b10a9').expect(200);
-    expect(response.body).to.have.property('userId');
-    expect(response.body).to.have.property('goalId');
-    expect(response.body).to.have.property('text');
-    expect(response.body).to.have.property('createdAt');
+    const response = await request.get('/comments/6527685ff7fe385cf16b10a9');
+    expect(response.body).toHaveProperty('userId');
+    expect(response.body).toHaveProperty('goalId');
+    expect(response.body).toHaveProperty('text');
+    expect(response.body).toHaveProperty('createdAt');
+    expect(response.statusCode).toBe(200);
   });
 
   it('respond to get all /goals', async () => {
-    const response = await request.get('/goals').expect(200);
+    const response = await request.get('/goals');
+    expect(response.statusCode).toBe(200);
   });
 
   it('respond to get a specific /goals/id', async () => {
-    const response = await request.get('/goals/652757fd941bfccbf0de1146').expect(200);
-    expect(response.body).to.have.property('userId');
-    expect(response.body).to.have.property('categoryId');
-    expect(response.body).to.have.property('title');
-    expect(response.body).to.have.property('description');
-    expect(response.body).to.have.property('startDate');
-    expect(response.body).to.have.property('dueDate');
-    expect(response.body).to.have.property('progress');
+    const response = await request.get('/goals/652757fd941bfccbf0de1146');
+    expect(response.statusCode).toBe(200);
+
+    expect(response.body).toHaveProperty('userId');
+    expect(response.body).toHaveProperty('categoryId');
+    expect(response.body).toHaveProperty('title');
+    expect(response.body).toHaveProperty('description');
+    expect(response.body).toHaveProperty('startDate');
+    expect(response.body).toHaveProperty('dueDate');
+    expect(response.body).toHaveProperty('progress');
   });
 
   //
