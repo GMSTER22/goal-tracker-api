@@ -21,13 +21,9 @@
     },
     "/users/": {
       "get": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "description": "Endpoint to get all users",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "responses": {
           "200": {
             "description": "OK"
@@ -35,9 +31,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "description": "Endpoint for creating a new user",
         "parameters": [
           {
@@ -61,11 +55,7 @@
                   "example": "joe.bobson@gmail.com"
                 }
               },
-              "required": [
-                "firstName",
-                "lastName",
-                "email"
-              ]
+              "required": ["firstName", "lastName", "email"]
             }
           }
         ],
@@ -81,13 +71,9 @@
     },
     "/users/{id}": {
       "get": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "description": "Endpoint to get a single user by id",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "id",
@@ -106,9 +92,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "description": "Endpoint for updating a user",
         "parameters": [
           {
@@ -138,11 +122,7 @@
                   "example": "jane.doe@gmail.com"
                 }
               },
-              "required": [
-                "firstName",
-                "lastName",
-                "email"
-              ]
+              "required": ["firstName", "lastName", "email"]
             }
           }
         ],
@@ -156,9 +136,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "description": "Endpoint for deleting a user",
         "parameters": [
           {
@@ -180,13 +158,9 @@
     },
     "/goals/": {
       "get": {
-        "tags": [
-          "Goals"
-        ],
+        "tags": ["Goals"],
         "description": "Endpoint to get all goals",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "responses": {
           "200": {
             "description": "OK"
@@ -194,9 +168,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Goals"
-        ],
+        "tags": ["Goals"],
         "description": "Endpoint to create a goal",
         "parameters": [
           {
@@ -260,13 +232,9 @@
     },
     "/goals/{id}": {
       "get": {
-        "tags": [
-          "Goals"
-        ],
+        "tags": ["Goals"],
         "description": "Endpoint to get a single goal",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "id",
@@ -285,9 +253,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Goals"
-        ],
+        "tags": ["Goals"],
         "description": "Endpoint to update a goal",
         "parameters": [
           {
@@ -355,9 +321,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Goals"
-        ],
+        "tags": ["Goals"],
         "description": "Endpoint to delete a goal",
         "parameters": [
           {
@@ -379,13 +343,9 @@
     },
     "/comments/": {
       "get": {
-        "tags": [
-          "Comments"
-        ],
+        "tags": ["Comments"],
         "description": "Endpoint to get all comments",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "responses": {
           "200": {
             "description": "OK"
@@ -393,9 +353,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Comments"
-        ],
+        "tags": ["Comments"],
         "description": "Endpoint for creating a new comment",
         "parameters": [
           {
@@ -423,12 +381,7 @@
                   "example": "10/13/2023"
                 }
               },
-              "required": [
-                "userId",
-                "goalId",
-                "text",
-                "createdAt"
-              ]
+              "required": ["userId", "goalId", "text", "createdAt"]
             }
           }
         ],
@@ -444,13 +397,9 @@
     },
     "/comments/{id}": {
       "get": {
-        "tags": [
-          "Comments"
-        ],
+        "tags": ["Comments"],
         "description": "Endpoint to get a single comment",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "id",
@@ -469,9 +418,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Comments"
-        ],
+        "tags": ["Comments"],
         "description": "Endpoint for updating a comment",
         "parameters": [
           {
@@ -505,12 +452,7 @@
                   "example": "10/13/2023"
                 }
               },
-              "required": [
-                "userId",
-                "goalId",
-                "text",
-                "createdAt"
-              ]
+              "required": ["userId", "goalId", "text", "createdAt"]
             }
           }
         ],
@@ -524,9 +466,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Comments"
-        ],
+        "tags": ["Comments"],
         "description": "Endpoint for deleting a comment",
         "parameters": [
           {
@@ -548,13 +488,9 @@
     },
     "/categories/": {
       "get": {
-        "tags": [
-          "Categories"
-        ],
+        "tags": ["Categories"],
         "description": "Endpoint to get all categories",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "responses": {
           "200": {
             "description": "OK"
@@ -562,9 +498,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Categories"
-        ],
+        "tags": ["Categories"],
         "description": "Endpoint for creating a new category",
         "parameters": [
           {
@@ -584,10 +518,7 @@
                   "example": "School"
                 }
               },
-              "required": [
-                "userId",
-                "categoryName"
-              ]
+              "required": ["userId", "categoryName"]
             }
           }
         ],
@@ -603,13 +534,9 @@
     },
     "/categories/{id}": {
       "get": {
-        "tags": [
-          "Categories"
-        ],
+        "tags": ["Categories"],
         "description": "Endpoint to get a single category",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "id",
@@ -628,9 +555,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Categories"
-        ],
+        "tags": ["Categories"],
         "description": "Endpoint for updating a category",
         "parameters": [
           {
@@ -656,10 +581,7 @@
                   "example": "School"
                 }
               },
-              "required": [
-                "userId",
-                "categoryName"
-              ]
+              "required": ["userId", "categoryName"]
             }
           }
         ],
@@ -673,9 +595,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Categories"
-        ],
+        "tags": ["Categories"],
         "description": "Endpoint for deleting a category",
         "parameters": [
           {

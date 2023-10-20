@@ -23,7 +23,7 @@ const getOneComment = async (req, res, next) => {
     const commentId = new ObjectId(req.params.id);
     const result = await mongodb.getDb().collection('comments').find({ _id: commentId });
     const comments = await result.toArray();
-    
+
     if (comments.length === 0) {
       // If comment with the specified ID is not found
       res.status(404).json({ error: 'comment not found' });

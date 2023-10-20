@@ -45,7 +45,7 @@ const getUserByEmail = async (req, res, next) => {
   try {
     const email = req.params.email;
     const result = await mongodb.getDb().collection('users').findOne({ email });
-    
+
     if (!result) {
       // If user with the specified email is not found
       res.status(404).json({ error: 'User not found' });
