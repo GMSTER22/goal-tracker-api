@@ -79,9 +79,11 @@ const createUser = async (req, res, next) => {
       return;
     }
     const user = {
+      googleId: req.body.googleId,
+      displayName: req.body.displayNameName,
       firstName: req.body.firstName,
       lastName: req.body.lastName,
-      email: req.body.email
+      image: req.body.image
     };
     const response = await mongodb.getDb().collection('users').insertOne(user);
     if (response.acknowledged) {

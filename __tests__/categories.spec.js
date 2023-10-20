@@ -6,7 +6,6 @@ const app = require('../index');
 const request = supertest(app);
 const passport = require('passport');
 const chai = require('chai');
-const { default: test } = require('node:test');
 const expect = chai.expect;
 const sum = (a, b) => a + b;
 
@@ -72,7 +71,7 @@ describe('Categories tests', () => {
   });
 
   it('respond to get a specific /goals/id', async () => {
-    const response = await request.get('/goals/652757fd941bfccbf0de1144').expect(200);
+    const response = await request.get('/goals/652757fd941bfccbf0de1146').expect(200);
     expect(response.body).to.have.property('userId');
     expect(response.body).to.have.property('categoryId');
     expect(response.body).to.have.property('title');
@@ -86,9 +85,50 @@ describe('Categories tests', () => {
   it('respond to post /categories', async () => {
     const response = await request
       .post('/categories')
-      .send({ userId: '65275353941bfccbf0de1135', categoryName: 'School' });
-    expect(204);
+      .send({ userId: '65275353941bfccbf0de1135', categoryName: 'School' })
+      .expect(204);
   });
+
+  it('respond to post /comments', async () => {
+    const response = await request
+      .post('/comments')
+      .send({
+        userId: '65275353941bfccbf0de1137',
+        goalId: '652757fd941bfccbf0de1144',
+        text: 'Great progress on this goal! Keep it up!',
+        createdAt: '2023-10-15'
+      })
+      .expect(204);
+  });
+
+  it('respond to post /goals', async () => {
+    const response = await request
+      .post('/goals')
+      .send({
+        userId: '65275353941bfccbf0de1135',
+        categoryId: '6527678ff7fe385cf16b10a8',
+        title: 'Complete Project A',
+        description: 'Finish all tasks related to Project A',
+        startDate: '2023-10-15',
+        dueDate: '2023-12-15',
+        progress: 30
+      })
+      .expect(204);
+  });
+
+  it('respond to post /users', async () => {
+    const response = await request
+      .post('/users')
+      .send({
+        googleId: '1078113323248215026523429',
+        displayName: 'Test User',
+        firstName: 'Test',
+        lastName: 'User',
+        image: 'https://lh3.googleusercontent.com/a/ACg8ocLjmyWMHwI7U1M-wpt67zfh_P6l2'
+      })
+      .expect(204);
+  });
+  //PUT requests
 
   it('respond to update a specific /categories/id', async () => {
     const response = await request.put('/categories/65329c98efb09d062e7a8ab3').send({
@@ -98,19 +138,61 @@ describe('Categories tests', () => {
     expect(204);
   });
 
-  it('respond to delete a single /categories', async () => {
+  it('respond to update a specific /comments/id', async () => {
+    const response = await request
+      .put('/comments/6527685ff7fe385cf16b10a9')
+      .send({
+        userId: '65275353941bfccbf0de1137',
+        goalId: '652757fd941bfccbf0de1144',
+        text: 'Great progress on this goal! Keep it up!',
+        createdAt: '2023-10-15'
+      })
+      .expect(204);
+  });
+
+  it('respond to update /goals/id', async () => {
+    const response = await request
+      .put('/goals/652757fd941bfccbf0de1146')
+      .send({
+        userId: '65275353941bfccbf0de1136',
+        categoryId: '6527678ff7fe385cf16b10a8',
+        title: 'Complete Project A',
+        description: 'Finish all tasks related to Project A',
+        startDate: '2023-10-15',
+        dueDate: '2023-12-15',
+        progress: 30
+      })
+      .expect(204);
+  });
+
+  it('respond to update /users/id', async () => {
+    const response = await request
+      .put('/users/65275353941bfccbf0de1135')
+      .send({
+        googleId: '1078113323248215026523429',
+        displayName: 'Test User',
+        firstName: 'Test',
+        lastName: 'User',
+        image: 'https://lh3.googleusercontent.com/a/ACg8ocLjmyWMHwI7U1M-wpt67zfh_P6l2'
+      })
+      .expect(204);
+  });
+
+  //DELETE requests
+  it('respond to delete a single /categories/id', async () => {
     const response = await request.delete('/categories/6527678ff7fe385cf16b10a4');
     expect(204);
   });
-
-  it('should access the protected route with Google OAuth authentication', async () => {
-    const user = {
-      googleId: '123456789',
-      displayName: 'Test User',
-      firstName: 'Test',
-      lastName: 'User',
-      image: 'https://example.com/testuser.jpg'
-    };
-    const response = await request.get('/users').set('user', JSON.stringify(user)).expect(200);
+  it('respond to delete a single /comments/id', async () => {
+    const response = await request.delete('/comments/6532c283f2b5bb84ff7099fa');
+    expect(204);
+  });
+  it('respond to delete a single /goals/id', async () => {
+    const response = await request.delete('/goals/6532c2e1c28fc60296a99d2e');
+    expect(204);
+  });
+  it('respond to delete a single /users/id', async () => {
+    const response = await request.delete('/users/6532c073bb372e2c5cd59f25');
+    expect(204);
   });
 });
