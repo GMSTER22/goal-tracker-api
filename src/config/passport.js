@@ -15,8 +15,7 @@ module.exports = function (passport) {
           displayName: profile.displayName,
           firstName: profile.name.givenName,
           lastName: profile.name.familyName,
-          image: profile.photos[0].value,
-          accessToken
+          image: profile.photos[0].value
         };
         try {
           let user = await mongodb.getDb().collection('users').findOne({ googleId: profile.id });
