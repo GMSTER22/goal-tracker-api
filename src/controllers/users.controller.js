@@ -71,7 +71,6 @@ const createUser = async (req, res, next) => {
         $displayName: 'Joe Bobson',
         $firstName: 'Joe',
         $lastName: 'Bobson',
-        $email: 'joe.bobson@gmail.com',
         $image: 'https://lh3.googleusercontent.com/a/ACg8ocLLFaifw_TT1jjw0E6SX-JzO0_ru4…'
       }
     }
@@ -83,7 +82,7 @@ const createUser = async (req, res, next) => {
     }
     const user = {
       googleId: req.body.googleId,
-      displayName: req.body.displayNameName,
+      displayName: req.body.displayName,
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       image: req.body.image
@@ -109,9 +108,11 @@ const updateUser = async (req, res, next) => {
       description: 'Update a User',
       require: true,
       schema: {
-        $firstName: 'Jane',
-        $lastName: 'Doe',
-        $email: 'jane.doe@gmail.com'
+        $googleId: '123989823749234',
+        $displayName: 'Joe Bobson',
+        $firstName: 'Joe',
+        $lastName: 'Bobson',
+        $image: 'https://lh3.googleusercontent.com/a/ACg8ocLLFaifw_TT1jjw0E6SX-JzO0_ru4…'
       }
     }
   */
@@ -122,9 +123,11 @@ const updateUser = async (req, res, next) => {
     }
     const userId = new ObjectId(req.params.id);
     const user = {
+      googleId: req.body.googleId,
+      displayName: req.body.displayName,
       firstName: req.body.firstName,
       lastName: req.body.lastName,
-      email: req.body.email
+      image: req.body.image
     };
     const response = await mongodb.getDb().collection('users').replaceOne({ _id: userId }, user);
     if (response.modifiedCount > 0) {
