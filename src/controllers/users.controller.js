@@ -67,9 +67,11 @@ const createUser = async (req, res, next) => {
       description: 'Add a User',
       require: true,
       schema: {
+        $googleId: '123989823749234',
+        $displayName: 'Joe Bobson',
         $firstName: 'Joe',
         $lastName: 'Bobson',
-        $email: 'joe.bobson@gmail.com'
+        $image: 'https://lh3.googleusercontent.com/a/ACg8ocLLFaifw_TT1jjw0E6SX-JzO0_ru4…'
       }
     }
   */
