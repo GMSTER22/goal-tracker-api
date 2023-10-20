@@ -12,9 +12,6 @@ router.get(
     failureRedirect: '/'
   }),
   (req, res) => {
-    const accessToken = req.user.accessToken;
-    console.log('Access Token:', accessToken);
-
     res.redirect('/login');
   }
 );
