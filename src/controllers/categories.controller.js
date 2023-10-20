@@ -10,8 +10,7 @@ const getAllCategories = async (req, res, next) => {
     res.setHeader('Content-Type', 'application/json');
     res.status(200).json(categories);
   } catch (error) {
-    // console.error(error);
-    // res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: 'Some error ocurred while retrieving all categories' });
     next(error);
   }
 };
@@ -33,8 +32,7 @@ const getOneCategory = async (req, res, next) => {
     res.setHeader('Content-Type', 'application/json');
     res.status(200).json(categories[0]);
   } catch (error) {
-    // console.error(error);
-    // res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: 'Some error ocurred while retrieving this category' });
     next(error);
   }
 };
@@ -54,6 +52,10 @@ const createCategory = async (req, res, next) => {
   }
   */
   try {
+    if (!req.body) {
+      res.status(400).send({ message: 'Content can not be empty!' });
+      return;
+    }
     const category = {
       userId: req.body.userId,
       categoryName: req.body.categoryName
@@ -65,6 +67,7 @@ const createCategory = async (req, res, next) => {
       res.status(500).json(response.error || 'Some error occurred while creating the new category');
     }
   } catch (error) {
+    res.status(500).json({ error: 'Some error ocurred while creating this category' });
     next(error);
   }
 };
@@ -84,6 +87,10 @@ const updateCategory = async (req, res, next) => {
   }
   */
   try {
+    if (!req.body) {
+      res.status(400).send({ message: 'Content can not be empty!' });
+      return;
+    }
     const categoryId = new ObjectId(req.params.id);
     const category = {
       userId: req.body.userId,
@@ -101,6 +108,7 @@ const updateCategory = async (req, res, next) => {
       res.status(500).json(response.error || 'Some error occurred while updating the category');
     }
   } catch (error) {
+    res.status(500).json({ error: 'Some error ocurred while updating this category' });
     next(error);
   }
 };
@@ -119,6 +127,7 @@ const deleteCategory = async (req, res, next) => {
       res.status(500).json(response.error || 'Some error occurred while deleting the category');
     }
   } catch (error) {
+    res.status(500).json({ error: 'Some error ocurred while deleting this category' });
     next(error);
   }
 };

@@ -10,8 +10,7 @@ const getAllComments = async (req, res, next) => {
     res.setHeader('Content-Type', 'application/json');
     res.status(200).json(comments);
   } catch (error) {
-    // console.error(error);
-    // res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: 'Some error ocurred while retrieving all comments' });
     next(error);
   }
 };
@@ -23,7 +22,7 @@ const getOneComment = async (req, res, next) => {
     const commentId = new ObjectId(req.params.id);
     const result = await mongodb.getDb().collection('comments').find({ _id: commentId });
     const comments = await result.toArray();
-    
+
     if (comments.length === 0) {
       // If comment with the specified ID is not found
       res.status(404).json({ error: 'comment not found' });
@@ -33,8 +32,7 @@ const getOneComment = async (req, res, next) => {
     res.setHeader('Content-Type', 'application/json');
     res.status(200).json(comments[0]);
   } catch (error) {
-    // console.error(error);
-    // res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: 'Some error ocurred while retrieving this comment' });
     next(error);
   }
 };
@@ -56,6 +54,10 @@ const createComment = async (req, res, next) => {
   }
   */
   try {
+    if (!req.body) {
+      res.status(400).send({ message: 'Content can not be empty!' });
+      return;
+    }
     const comment = {
       userId: req.body.userId,
       goalId: req.body.goalId,
@@ -69,6 +71,7 @@ const createComment = async (req, res, next) => {
       res.status(500).json(response.error || 'Some error occurred while creating the new comment');
     }
   } catch (error) {
+    res.status(500).json({ error: 'Some error ocurred while creating this new comment' });
     next(error);
   }
 };
@@ -90,6 +93,10 @@ const updateComment = async (req, res, next) => {
   }
   */
   try {
+    if (!req.body) {
+      res.status(400).send({ message: 'Content can not be empty!' });
+      return;
+    }
     const commentId = new ObjectId(req.params.id);
     const comment = {
       userId: req.body.userId,
@@ -109,6 +116,7 @@ const updateComment = async (req, res, next) => {
       res.status(500).json(response.error || 'Some error occurred while updating the comment');
     }
   } catch (error) {
+    res.status(500).json({ error: 'Some error ocurred while updating this comment' });
     next(error);
   }
 };
@@ -127,6 +135,7 @@ const deleteComment = async (req, res, next) => {
       res.status(500).json(response.error || 'Some error occurred while deleting the comment');
     }
   } catch (error) {
+    res.status(500).json({ error: 'Some error ocurred while deleting this comment' });
     next(error);
   }
 };
