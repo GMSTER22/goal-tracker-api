@@ -110,6 +110,7 @@ const updateGoal = async (req, res, next) => {
     const goal = {
       userId: req.body.userId,
       title: req.body.title,
+      categoryId: req.body.categoryId,
       description: req.body.description,
       startDate: req.body.startDate,
       dueDate: req.body.dueDate,

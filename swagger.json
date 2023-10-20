@@ -45,6 +45,14 @@
             "schema": {
               "type": "object",
               "properties": {
+                "googleId": {
+                  "type": "string",
+                  "example": "123989823749234"
+                },
+                "displayName": {
+                  "type": "string",
+                  "example": "Joe Bobson"
+                },
                 "firstName": {
                   "type": "string",
                   "example": "Joe"
@@ -53,12 +61,12 @@
                   "type": "string",
                   "example": "Bobson"
                 },
-                "email": {
+                "image": {
                   "type": "string",
-                  "example": "joe.bobson@gmail.com"
+                  "example": "https://lh3.googleusercontent.com/a/ACg8ocLLFaifw_TT1jjw0E6SX-JzO0_ru4…"
                 }
               },
-              "required": ["firstName", "lastName", "email"]
+              "required": ["googleId", "displayName", "firstName", "lastName", "image"]
             }
           }
         ],
@@ -121,20 +129,28 @@
             "schema": {
               "type": "object",
               "properties": {
+                "googleId": {
+                  "type": "string",
+                  "example": "123989823749234"
+                },
+                "displayName": {
+                  "type": "string",
+                  "example": "Joe Bobson"
+                },
                 "firstName": {
                   "type": "string",
-                  "example": "Jane"
+                  "example": "Joe"
                 },
                 "lastName": {
                   "type": "string",
-                  "example": "Doe"
+                  "example": "Bobson"
                 },
-                "email": {
+                "image": {
                   "type": "string",
-                  "example": "jane.doe@gmail.com"
+                  "example": "https://lh3.googleusercontent.com/a/ACg8ocLLFaifw_TT1jjw0E6SX-JzO0_ru4…"
                 }
               },
-              "required": ["firstName", "lastName", "email"]
+              "required": ["googleId", "displayName", "firstName", "lastName", "image"]
             }
           }
         ],
