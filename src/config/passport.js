@@ -7,7 +7,7 @@ module.exports = function (passport) {
       {
         clientID: config.googleClientId,
         clientSecret: config.googleClientSecret,
-        callbackURL: 'https://goal-tracker-javr.onrender.com/auth/google/callback'
+        callbackURL: '/auth/google/callback'
       },
       async (accessToken, refreshToken, profile, done) => {
         const newUser = {
@@ -15,7 +15,8 @@ module.exports = function (passport) {
           displayName: profile.displayName,
           firstName: profile.name.givenName,
           lastName: profile.name.familyName,
-          image: profile.photos[0].value
+          image: profile.photos[0].value,
+          accessToken
         };
         try {
           let user = await mongodb.getDb().collection('users').findOne({ googleId: profile.id });
