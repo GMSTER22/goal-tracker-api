@@ -4,10 +4,8 @@ const uri = config.databaseURL;
 const supertest = require('supertest');
 const app = require('../index');
 const request = supertest(app);
-const passport = require('passport');
 const chai = require('chai');
 const expect = chai.expect;
-const sum = (a, b) => a + b;
 
 describe('Categories tests', () => {
   let connection;
@@ -30,6 +28,8 @@ describe('Categories tests', () => {
   });
 
   //GET requests
+  //
+  //
 
   it('respond to get all /categories', async () => {
     const response = await request.get('/categories').expect(200);
@@ -81,6 +81,8 @@ describe('Categories tests', () => {
     expect(response.body).to.have.property('progress');
   });
 
+  //
+  //
   //POST requests
   it('respond to post /categories', async () => {
     const response = await request
@@ -128,8 +130,10 @@ describe('Categories tests', () => {
       })
       .expect(204);
   });
-  //PUT requests
 
+  //PUT requests
+  //
+  //
   it('respond to update a specific /categories/id', async () => {
     const response = await request.put('/categories/65329c98efb09d062e7a8ab3').send({
       userId: '65275353941bfccbf0de1135',
@@ -179,6 +183,8 @@ describe('Categories tests', () => {
   });
 
   //DELETE requests
+  //
+  //
   it('respond to delete a single /categories/id', async () => {
     const response = await request.delete('/categories/6527678ff7fe385cf16b10a4');
     expect(204);
