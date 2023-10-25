@@ -49,7 +49,7 @@ const createComment = async (req, res, next) => {
       $userId: '65275353941bfccbf0de1135',
       $goalId: '652757fd941bfccbf0de1144',
       $text: 'I am doing pretty good on my goal',
-      $createdAt: '10/13/2023'
+      $createdAt: '2023-10-20'
     }
   }
   */
@@ -88,7 +88,7 @@ const updateComment = async (req, res, next) => {
       $userId: '65275353941bfccbf0de1135',
       $goalId: '652757fd941bfccbf0de1144',
       $text: 'I am struggling with my goal',
-      $createdAt: '10/13/2023'
+      $createdAt: '2023-10-20'
     }
   }
   */

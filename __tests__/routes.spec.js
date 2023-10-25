@@ -35,7 +35,7 @@ describe('Categories tests', () => {
   });
 
   it('respond to get a specific /categories/id', async () => {
-    const response = await request.get('/categories/65329c98efb09d062e7a8ab3');
+    const response = await request.get('/categories/6532fb42819ac10a4b3ccef7');
     expect(response.statusCode).toBe(200);
     expect(response.body).toHaveProperty('userId');
     expect(response.body).toHaveProperty('categoryName');

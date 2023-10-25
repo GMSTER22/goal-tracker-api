@@ -50,8 +50,8 @@ const createGoal = async (req, res, next) => {
             $categoryId: '6527678ff7fe385cf16b10a4',
             $title: 'Eat more Carrots',
             $description: 'I need to eat more carrots.',
-            $startDate: '2023/10/13',
-            $dueDate: '2023/12/13',
+            $startDate: '2023-10-13',
+            $dueDate: '2023-12-13',
             $progress: 10
         }
     }
@@ -95,8 +95,8 @@ const updateGoal = async (req, res, next) => {
             $categoryId: '6527678ff7fe385cf16b10a4',
             $title: 'Study the Scriptures',
             $description: 'I need to study the scriptures more often.',
-            $startDate: '2023/10/14',
-            $dueDate: '2023/12/13',
+            $startDate: '2023-10-14',
+            $dueDate: '2023-12-13',
             $progress: 10
         }
     }
