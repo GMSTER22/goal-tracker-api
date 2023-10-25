@@ -234,11 +234,11 @@
                 },
                 "startDate": {
                   "type": "string",
-                  "example": "2023/10/13"
+                  "example": "2023-10-13"
                 },
                 "dueDate": {
                   "type": "string",
-                  "example": "2023/12/13"
+                  "example": "2023-12-13"
                 },
                 "progress": {
                   "type": "number",
@@ -334,11 +334,11 @@
                 },
                 "startDate": {
                   "type": "string",
-                  "example": "2023/10/14"
+                  "example": "2023-10-14"
                 },
                 "dueDate": {
                   "type": "string",
-                  "example": "2023/12/13"
+                  "example": "2023-12-13"
                 },
                 "progress": {
                   "type": "number",
@@ -433,7 +433,7 @@
                 },
                 "createdAt": {
                   "type": "string",
-                  "example": "10/13/2023"
+                  "example": "2023-10-20"
                 }
               },
               "required": ["userId", "goalId", "text", "createdAt"]
@@ -513,7 +513,7 @@
                 },
                 "createdAt": {
                   "type": "string",
-                  "example": "10/13/2023"
+                  "example": "2023-10-20"
                 }
               },
               "required": ["userId", "goalId", "text", "createdAt"]
